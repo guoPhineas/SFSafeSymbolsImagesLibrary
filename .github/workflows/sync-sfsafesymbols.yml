@@ -38,7 +38,7 @@ jobs:
         run: |
           pwd
           tree -d
-          cp -R temp_sfsafesymbols/SFSafeSymbols/Sources/SFSafeSymbols/SymbolImages/* Images/
+          cp -R temp_sfsafesymbols/Sources/SFSafeSymbols/SymbolImages/* Images/
           
       - name: Commit and push changes
         run: |
