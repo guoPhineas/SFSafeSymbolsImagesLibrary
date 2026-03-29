@@ -20,12 +20,6 @@ jobs:
         run: |
           git clone https://github.com/SFSafeSymbols/SFSafeSymbols.git temp_sfsafesymbols
 
-      - name: Msic
-        run: |
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          brew install tree
-          tree -d
-          
       - name: Build with make
         working-directory: ./temp_sfsafesymbols
         run: |
@@ -33,20 +27,14 @@ jobs:
           
       - name: Create target directory
         run: |
-          pwd
-          tree -d
           mkdir -p Images
           
       - name: Copy symbol images
         run: |
-          pwd
-          tree -d
           cp -R temp_sfsafesymbols/Sources/SFSafeSymbols/SymbolImages/* Images/
           
       - name: Commit and push changes
         run: |
-          pwd
-          tree -d
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add Images/
