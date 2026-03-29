@@ -22,8 +22,8 @@ jobs:
           find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
           
       - name: Build with make
-        working-directory: ./temp_sfsafesymbols
         run: |
+          cd ./temp_sfsafesymbols
           make
           
       - name: Create target directory
