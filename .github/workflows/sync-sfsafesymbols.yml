@@ -1,0 +1,45 @@
+name: Sync SFSafeSymbols
+
+on:
+  # schedule:
+    # - cron: '0 2 * * 1'
+  workflow_dispatch:
+
+jobs:
+  sync-symbols:
+    runs-on: macos-latest
+    
+    steps:
+      - name: Checkout target repository
+        uses: actions/checkout@v4
+
+      - name: Clone SFSafeSymbols repository
+        run: |
+          git clone https://github.com/SFSafeSymbols/SFSafeSymbols.git temp_sfsafesymbols
+          
+      - name: Build with make
+        working-directory: ./temp_sfsafesymbols
+        run: |
+          make
+          
+      - name: Create target directory
+        run: mkdir -p Images
+          
+      - name: Copy symbol images
+        run: |
+          cp -R temp_sfsafesymbols/SFSafeSymbols/Sources/SFSafeSymbols/SymbolImages/* Images/
+          
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Images/
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Sync SFSafeSymbols images from upstream"
+            git push
+          fi
+          
+      - name: Clean up
+        run: rm -rf temp_sfsafesymbols
