@@ -16,6 +16,10 @@ jobs:
       - name: Clone SFSafeSymbols repository
         run: |
           git clone https://github.com/SFSafeSymbols/SFSafeSymbols.git temp_sfsafesymbols
+
+      - name: Directory tree
+        run: |
+          find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
           
       - name: Build with make
         working-directory: ./temp_sfsafesymbols
